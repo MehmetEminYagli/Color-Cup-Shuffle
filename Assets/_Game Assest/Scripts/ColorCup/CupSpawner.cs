@@ -63,11 +63,12 @@ public class CupSpawner : MonoBehaviour
         // Seçilen prefabları random seçilen spawn noktalarına yerleştir
         for (int i = 0; i < selectedPrefabs.Count; i++)
         {
-            Instantiate(selectedPrefabs[i], selectedSpawnPoints[i].position, Quaternion.identity);
+            Instantiate(selectedPrefabs[i], selectedSpawnPoints[i].position, Quaternion.identity, selectedSpawnPoints[i]);
+
         }
         for (int i = 0; i < selectedPrefabs.Count; i++)
         {
-            Instantiate(selectedPrefabs[i], selectedInvisibleSpawnPoints[i].position, Quaternion.identity);
+            Instantiate(selectedPrefabs[i], selectedInvisibleSpawnPoints[i].position, Quaternion.identity,selectedInvisibleSpawnPoints[i]);
         }
     }
 }

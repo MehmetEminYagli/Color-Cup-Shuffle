@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 8961049571747670046}
   - component: {fileID: 7612481807405098422}
   - component: {fileID: 7230485018967651367}
-  - component: {fileID: 4759518499563918194}
-  - component: {fileID: 3463401676803807803}
   m_Layer: 0
   m_Name: Apple
   m_TagString: Untagged
@@ -99,8 +97,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3850412, y: 1.5293875, z: 1.3919864}
-  m_Center: {x: 0.000018388033, y: 0.074912876, z: 0.000006467104}
+  m_Size: {x: 3.7039683, y: 2.4700212, z: 1.3919864}
+  m_Center: {x: -0.21959174, y: 0.5452297, z: 0.0000064373016}
 --- !u!54 &7230485018967651367
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -117,32 +115,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4759518499563918194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7233024093203569858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38cac8941206c2147a5ce885556ab7ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3463401676803807803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7233024093203569858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25657952c99026847829d4e080ad7b3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
