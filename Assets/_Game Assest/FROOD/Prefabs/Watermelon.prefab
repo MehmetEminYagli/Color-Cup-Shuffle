@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 8047963608926378550}
   - component: {fileID: 3230479375606020301}
   - component: {fileID: 803048955333670490}
-  - component: {fileID: 5165570217961630034}
-  - component: {fileID: 6768997438966608643}
+  - component: {fileID: 1329318142}
   m_Layer: 0
   m_Name: Watermelon
   m_TagString: Untagged
@@ -29,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8614482630567653098}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -120,7 +119,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.2981548, y: 1.5972942, z: 0.38908872}
   m_Center: {x: -0.0000005960464, y: -0.16305481, z: 0.0009268447}
---- !u!114 &5165570217961630034
+--- !u!114 &1329318142
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,23 +128,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8614482630567653098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25657952c99026847829d4e080ad7b3f, type: 3}
+  m_Script: {fileID: 11500000, guid: adacca05c0d696f4ca539d3ff5502e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &6768997438966608643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8614482630567653098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38cac8941206c2147a5ce885556ab7ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  objectID: 6
+  objectName: Watermelon

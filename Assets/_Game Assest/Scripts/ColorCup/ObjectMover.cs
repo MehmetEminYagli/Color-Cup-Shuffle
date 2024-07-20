@@ -9,7 +9,14 @@ public class ObjectMover : MonoBehaviour
     [SerializeField] private PositionManager currentPositionManager;
     [SerializeField] private bool objectSelected = false; // Nesne seçildi mi?
     [SerializeField] private bool objectIsUp = false; // Nesne yukarıda mı?
+    //[SerializeField] private MatchCounter matchCounter;
+    [SerializeField] List<CupCompare> cupComparer;
 
+
+    public List<CupCompare> GetListCupCompare()
+    {
+        return cupComparer;
+    }
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -30,7 +37,7 @@ public class ObjectMover : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if(hit.collider.TryGetComponent<PositionManager>(out PositionManager pos))
+            if (hit.collider.TryGetComponent<PositionManager>(out PositionManager pos))
             {
                 selectedObject = pos.GetComponentInChildren<Cup>().gameObject;
 
@@ -68,7 +75,11 @@ public class ObjectMover : MonoBehaviour
                         selectedObject.GetComponent<Rigidbody>().isKinematic = false;
                         selectedObject = null;
                         objectSelected = false; // Nesne seçilmedi
-                        objectIsUp = false; // Nesne artık yukarıda değil
+                        objectIsUp = false; // Nesne artık yukarıda 
+
+                        CompareFunctionUpdate();
+                        //matchCounter.CountCorrectMatches();
+
                     });
                 }
                 else
@@ -99,11 +110,29 @@ public class ObjectMover : MonoBehaviour
                         selectedObject = null;
                         objectSelected = false; // Nesne seçilmedi
                         objectIsUp = false; // Nesne artık yukarıda değil
+
+                        CompareFunctionUpdate();
+                        //matchCounter.CountCorrectMatches();
+
+
                     });
                 }
 
                 currentPositionManager.SetIsFull(false);
             }
+        }
+    }
+
+
+
+    //compare listesini güncelleme fonskiyonu
+
+    void CompareFunctionUpdate()
+    {
+        for (int i = 0; i < cupComparer.Count; i++)
+        {
+
+            cupComparer[i].UpdateCupPairs();
         }
     }
 }

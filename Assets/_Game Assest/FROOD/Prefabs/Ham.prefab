@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 367622603060310025}
   - component: {fileID: 1899235933022504403}
   - component: {fileID: 5045747019116009305}
-  - component: {fileID: 5463533658050847858}
-  - component: {fileID: 632140486573521227}
+  - component: {fileID: 627794797}
   m_Layer: 0
   m_Name: Ham
   m_TagString: Untagged
@@ -29,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2100604612527670485}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -118,7 +117,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.074845, y: 2.0410469, z: 2.0410469}
   m_Center: {x: -1.7763568e-15, y: 3.5527137e-15, z: 0.0000019669533}
---- !u!114 &5463533658050847858
+--- !u!114 &627794797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,23 +126,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2100604612527670485}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25657952c99026847829d4e080ad7b3f, type: 3}
+  m_Script: {fileID: 11500000, guid: adacca05c0d696f4ca539d3ff5502e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &632140486573521227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100604612527670485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38cac8941206c2147a5ce885556ab7ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  objectID: 5
+  objectName: Drink

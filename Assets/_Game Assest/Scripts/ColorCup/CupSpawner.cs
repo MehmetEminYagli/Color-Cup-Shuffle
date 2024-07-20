@@ -7,9 +7,15 @@ public class CupSpawner : MonoBehaviour
     [SerializeField] private List<GameObject> gameObjectPrefab = new List<GameObject>();
     [SerializeField] private List<Transform> cupListTransform = new List<Transform>();
     [SerializeField] private List<Transform> cupListInvisibleTransform = new List<Transform>();
-    void Start()
+
+    private void Awake()
     {
         SpawnRandomPrefabs();
+    }
+
+    void Start()
+    {
+        
     }
 
     void SpawnRandomPrefabs()
@@ -71,4 +77,6 @@ public class CupSpawner : MonoBehaviour
             Instantiate(selectedPrefabs[i], selectedInvisibleSpawnPoints[i].position, Quaternion.identity,selectedInvisibleSpawnPoints[i]);
         }
     }
+
+
 }

@@ -96,8 +96,7 @@ GameObject:
   - component: {fileID: 260686035503035374}
   - component: {fileID: 2720329213814721972}
   - component: {fileID: 6714657542774914956}
-  - component: {fileID: 962540082677541893}
-  - component: {fileID: 4857523763245465452}
+  - component: {fileID: 505155016}
   m_Layer: 0
   m_Name: Bottle
   m_TagString: Untagged
@@ -112,7 +111,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991420744688600882}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -201,7 +200,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.1294425, y: 3.0291, z: 2.1294422}
   m_Center: {x: 0, y: 0.43347746, z: 0.000000059604645}
---- !u!114 &962540082677541893
+--- !u!114 &505155016
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,26 +209,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1991420744688600882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38cac8941206c2147a5ce885556ab7ef, type: 3}
+  m_Script: {fileID: 11500000, guid: adacca05c0d696f4ca539d3ff5502e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4857523763245465452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991420744688600882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25657952c99026847829d4e080ad7b3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  objectID: 2
+  objectName: Bottle
 --- !u!1 &5844675861701123284
 GameObject:
   m_ObjectHideFlags: 0
