@@ -5,7 +5,7 @@ using DG.Tweening;
 public class ObjectMover : MonoBehaviour
 {
     private GameObject selectedObject;
-    [SerializeField] private List<PositionManager> positionManagers; // Hedef pozisyonların listesi
+    [SerializeField] private List<PositionManager> positionManagers;
     [SerializeField] private PositionManager currentPositionManager;
     [SerializeField] private bool objectSelected = false;
     [SerializeField] private bool objectIsUp = false;
@@ -63,7 +63,7 @@ public class ObjectMover : MonoBehaviour
                     selectedObject.GetComponent<Rigidbody>().isKinematic = true;
                 });
                 currentPositionManager.SetIsFull(false);
-                objectSelected = true; // Nesne seçildi
+                objectSelected = true;
             }
         }
     }
@@ -79,13 +79,12 @@ public class ObjectMover : MonoBehaviour
 
                 if (!targetPosition.IsFull)
                 {
-                    // Hedef pozisyon boşsa, nesneyi bu konuma taşı
                     selectedObjectCollider.enabled = false;
                     selectedObject.transform.DOMove(targetPosition.transform.position, 0.5f).OnComplete(() =>
                     {
                         targetPosition.SetIsFull(true);
                         selectedObjectCollider.enabled = true;
-                        selectedObject.transform.SetParent(targetPosition.transform); // Parent değişikliği
+                        selectedObject.transform.SetParent(targetPosition.transform);
                         selectedObject.GetComponent<Rigidbody>().isKinematic = false;
                         selectedObject = null;
                         objectSelected = false;
@@ -96,7 +95,6 @@ public class ObjectMover : MonoBehaviour
                 }
                 else
                 {
-                    // Hedef pozisyon doluysa, yer değiştirme işlemi
                     GameObject otherObject = targetPosition.GetComponentInChildren<Cup>().gameObject;
                     Collider otherObjectCollider = otherObject.GetComponent<Collider>();
                     Vector3 originalPosition = selectedObject.transform.position;
@@ -104,20 +102,18 @@ public class ObjectMover : MonoBehaviour
                     selectedObjectCollider.enabled = false;
                     otherObjectCollider.enabled = false;
 
-                    // Diğer nesneyi mevcut pozisyona taşı
                     otherObject.transform.DOMove(currentPositionManager.transform.position, 0.5f).OnComplete(() =>
                     {
                         currentPositionManager.SetIsFull(true);
                         otherObjectCollider.enabled = true;
-                        otherObject.transform.SetParent(currentPositionManager.transform); // Parent değişikliği
+                        otherObject.transform.SetParent(currentPositionManager.transform);
                     });
 
-                    // Seçilen nesneyi hedef pozisyona taşı
                     selectedObject.transform.DOMove(targetPosition.transform.position, 0.5f).OnComplete(() =>
                     {
                         targetPosition.SetIsFull(true);
                         selectedObjectCollider.enabled = true;
-                        selectedObject.transform.SetParent(targetPosition.transform); // Parent değişikliği
+                        selectedObject.transform.SetParent(targetPosition.transform);
                         selectedObject.GetComponent<Rigidbody>().isKinematic = false;
                         selectedObject = null;
                         objectSelected = false;
