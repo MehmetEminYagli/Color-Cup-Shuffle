@@ -7,16 +7,10 @@ public class ObjectMover : MonoBehaviour
     private GameObject selectedObject;
     [SerializeField] private List<PositionManager> positionManagers; // Hedef pozisyonların listesi
     [SerializeField] private PositionManager currentPositionManager;
-    [SerializeField] private bool objectSelected = false; // Nesne seçildi mi?
-    [SerializeField] private bool objectIsUp = false; // Nesne yukarıda mı?
-    //[SerializeField] private MatchCounter matchCounter;
+    [SerializeField] private bool objectSelected = false;
+    [SerializeField] private bool objectIsUp = false;
     [SerializeField] List<CupCompare> cupComparer;
 
-
-    public List<CupCompare> GetListCupCompare()
-    {
-        return cupComparer;
-    }
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -48,7 +42,6 @@ public class ObjectMover : MonoBehaviour
                     selectedObject.GetComponent<Rigidbody>().isKinematic = true;
                 });
                 currentPositionManager.SetIsFull(false);
-
                 objectSelected = true; // Nesne seçildi
             }
         }
@@ -74,11 +67,10 @@ public class ObjectMover : MonoBehaviour
                         selectedObject.transform.SetParent(targetPosition.transform); // Parent değişikliği
                         selectedObject.GetComponent<Rigidbody>().isKinematic = false;
                         selectedObject = null;
-                        objectSelected = false; // Nesne seçilmedi
-                        objectIsUp = false; // Nesne artık yukarıda 
+                        objectSelected = false;
+                        objectIsUp = false;
 
                         CompareFunctionUpdate();
-                        //matchCounter.CountCorrectMatches();
 
                     });
                 }
@@ -108,13 +100,10 @@ public class ObjectMover : MonoBehaviour
                         selectedObject.transform.SetParent(targetPosition.transform); // Parent değişikliği
                         selectedObject.GetComponent<Rigidbody>().isKinematic = false;
                         selectedObject = null;
-                        objectSelected = false; // Nesne seçilmedi
-                        objectIsUp = false; // Nesne artık yukarıda değil
+                        objectSelected = false; 
+                        objectIsUp = false; 
 
                         CompareFunctionUpdate();
-                        //matchCounter.CountCorrectMatches();
-
-
                     });
                 }
 
@@ -122,11 +111,6 @@ public class ObjectMover : MonoBehaviour
             }
         }
     }
-
-
-
-    //compare listesini güncelleme fonskiyonu
-
     void CompareFunctionUpdate()
     {
         for (int i = 0; i < cupComparer.Count; i++)

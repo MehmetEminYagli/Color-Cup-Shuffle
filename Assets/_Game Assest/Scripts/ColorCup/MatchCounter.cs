@@ -1,11 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MatchCounter : MonoBehaviour
 {
     [SerializeField] private List<CupCompare> cupComparer;
-    [SerializeField] private int correctMatches;
+    private int correctMatches;
+    [SerializeField] private TextMeshProUGUI correctCount;
 
+    private void Start()
+    {
+        TextCorrectMathesCount();
+    }
     public void CountCorrectMatches()
     {
         correctMatches = 0;
@@ -20,13 +26,18 @@ public class MatchCounter : MonoBehaviour
             {
             }
         }
-
         GetCorrectMatches();
+        TextCorrectMathesCount();
     }
 
     public int GetCorrectMatches()
     {
-        Debug.Log(correctMatches);
+        
         return correctMatches;
+    }
+
+    public void TextCorrectMathesCount()
+    {
+        correctCount.text = GetCorrectMatches().ToString() + " / " + cupComparer.Count.ToString();
     }
 }
