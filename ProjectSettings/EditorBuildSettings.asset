@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Game Assest/Scenes/MainScene.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+    path: Assets/_Game Assest/Scenes/ColorCupSceneLevel1.unity
+    guid: fe32cc24a23592a478ef68e71e1e01dd
   m_configObjects: {}
