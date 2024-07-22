@@ -10,57 +10,54 @@ public class ObjectMover : MonoBehaviour
     [SerializeField] private bool objectSelected = false;
     [SerializeField] private bool objectIsUp = false;
     [SerializeField] List<CupCompare> cupComparer;
+    private bool isAnimating = false;
 
     private void Update()
     {
+        if (isAnimating) return;
+
         if (Input.GetMouseButtonDown(0))
         {
-            if (!objectSelected)
-            {
-                SelectObject();
-            }
-            else if (selectedObject != null)
-            {
-                MoveObject();
-            }
+            HandleInput(Input.mousePosition);
         }
 
-        /*mobile*/
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-
             if (touch.phase == TouchPhase.Began)
             {
-                if (!objectSelected)
-                {
-                    SelectObject(touch.position);
-                }
-                else if (selectedObject != null)
-                {
-                    MoveObject(touch.position);
-                }
+                HandleInput(touch.position);
             }
         }
     }
 
-    /*mobile*/
-
-
-    private void SelectObject(Vector2 touchPosition)
+    private void HandleInput(Vector2 inputPosition)
     {
-        Ray ray = Camera.main.ScreenPointToRay(touchPosition);
+        if (!objectSelected)
+        {
+            SelectObject(inputPosition);
+        }
+        else if (selectedObject != null)
+        {
+            MoveObject(inputPosition);
+        }
+    }
+
+    private void SelectObject(Vector2 inputPosition)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(inputPosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (hit.collider.TryGetComponent<PositionManager>(out PositionManager pos))
             {
                 selectedObject = pos.GetComponentInChildren<Cup>().gameObject;
-
                 currentPositionManager = selectedObject.GetComponentInParent<PositionManager>();
+                isAnimating = true; 
                 selectedObject.transform.DOMoveY(selectedObject.transform.position.y + .5f, 0.5f).OnComplete(() =>
                 {
                     objectIsUp = true;
                     selectedObject.GetComponent<Rigidbody>().isKinematic = true;
+                    isAnimating = false; 
                 });
                 currentPositionManager.SetIsFull(false);
                 objectSelected = true;
@@ -68,9 +65,9 @@ public class ObjectMover : MonoBehaviour
         }
     }
 
-    private void MoveObject(Vector2 touchPosition)
+    private void MoveObject(Vector2 inputPosition)
     {
-        Ray ray = Camera.main.ScreenPointToRay(touchPosition);
+        Ray ray = Camera.main.ScreenPointToRay(inputPosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (hit.collider.TryGetComponent<PositionManager>(out PositionManager targetPosition) && objectIsUp)
@@ -79,48 +76,11 @@ public class ObjectMover : MonoBehaviour
 
                 if (!targetPosition.IsFull)
                 {
-                    selectedObjectCollider.enabled = false;
-                    selectedObject.transform.DOMove(targetPosition.transform.position, 0.5f).OnComplete(() =>
-                    {
-                        targetPosition.SetIsFull(true);
-                        selectedObjectCollider.enabled = true;
-                        selectedObject.transform.SetParent(targetPosition.transform);
-                        selectedObject.GetComponent<Rigidbody>().isKinematic = false;
-                        selectedObject = null;
-                        objectSelected = false;
-                        objectIsUp = false;
-
-                        CompareFunctionUpdate();
-                    });
+                    MoveToTargetPosition(targetPosition, selectedObjectCollider);
                 }
                 else
                 {
-                    GameObject otherObject = targetPosition.GetComponentInChildren<Cup>().gameObject;
-                    Collider otherObjectCollider = otherObject.GetComponent<Collider>();
-                    Vector3 originalPosition = selectedObject.transform.position;
-
-                    selectedObjectCollider.enabled = false;
-                    otherObjectCollider.enabled = false;
-
-                    otherObject.transform.DOMove(currentPositionManager.transform.position, 0.5f).OnComplete(() =>
-                    {
-                        currentPositionManager.SetIsFull(true);
-                        otherObjectCollider.enabled = true;
-                        otherObject.transform.SetParent(currentPositionManager.transform);
-                    });
-
-                    selectedObject.transform.DOMove(targetPosition.transform.position, 0.5f).OnComplete(() =>
-                    {
-                        targetPosition.SetIsFull(true);
-                        selectedObjectCollider.enabled = true;
-                        selectedObject.transform.SetParent(targetPosition.transform);
-                        selectedObject.GetComponent<Rigidbody>().isKinematic = false;
-                        selectedObject = null;
-                        objectSelected = false;
-                        objectIsUp = false;
-
-                        CompareFunctionUpdate();
-                    });
+                    SwapObjects(targetPosition, selectedObjectCollider);
                 }
 
                 currentPositionManager.SetIsFull(false);
@@ -128,100 +88,59 @@ public class ObjectMover : MonoBehaviour
         }
     }
 
-
-
-    /*mobile*/
-
-    private void SelectObject()
+    private void MoveToTargetPosition(PositionManager targetPosition, Collider selectedObjectCollider)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        selectedObjectCollider.enabled = false;
+        isAnimating = true;
+        selectedObject.transform.DOMove(targetPosition.transform.position, 0.5f).OnComplete(() =>
         {
-            if (hit.collider.TryGetComponent<PositionManager>(out PositionManager pos))
-            {
-                selectedObject = pos.GetComponentInChildren<Cup>().gameObject;
-
-                currentPositionManager = selectedObject.GetComponentInParent<PositionManager>();
-                selectedObject.transform.DOMoveY(selectedObject.transform.position.y + .5f, 0.5f).OnComplete(() =>
-                {
-                    objectIsUp = true;
-                    selectedObject.GetComponent<Rigidbody>().isKinematic = true;
-                });
-                currentPositionManager.SetIsFull(false);
-                objectSelected = true; // Nesne seçildi
-            }
-        }
+            targetPosition.SetIsFull(true);
+            selectedObjectCollider.enabled = true;
+            selectedObject.transform.SetParent(targetPosition.transform);
+            selectedObject.GetComponent<Rigidbody>().isKinematic = false;
+            selectedObject = null;
+            objectSelected = false;
+            objectIsUp = false;
+            isAnimating = false; 
+            CompareFunctionUpdate();
+        });
     }
 
-    private void MoveObject()
+    private void SwapObjects(PositionManager targetPosition, Collider selectedObjectCollider)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        GameObject otherObject = targetPosition.GetComponentInChildren<Cup>().gameObject;
+        Collider otherObjectCollider = otherObject.GetComponent<Collider>();
+        Vector3 originalPosition = selectedObject.transform.position;
+
+        selectedObjectCollider.enabled = false;
+        otherObjectCollider.enabled = false;
+        isAnimating = true; 
+
+        otherObject.transform.DOMove(currentPositionManager.transform.position, 0.5f).OnComplete(() =>
         {
-            if (hit.collider.TryGetComponent<PositionManager>(out PositionManager targetPosition) && objectIsUp)
-            {
-                Collider selectedObjectCollider = selectedObject.GetComponent<Collider>();
+            currentPositionManager.SetIsFull(true);
+            otherObjectCollider.enabled = true;
+            otherObject.transform.SetParent(currentPositionManager.transform);
+        });
 
-                if (!targetPosition.IsFull)
-                {
-                    // Hedef pozisyon boşsa, nesneyi bu konuma taşı
-                    selectedObjectCollider.enabled = false;
-                    selectedObject.transform.DOMove(targetPosition.transform.position, 0.5f).OnComplete(() =>
-                    {
-                        targetPosition.SetIsFull(true);
-                        selectedObjectCollider.enabled = true;
-                        selectedObject.transform.SetParent(targetPosition.transform); // Parent değişikliği
-                        selectedObject.GetComponent<Rigidbody>().isKinematic = false;
-                        selectedObject = null;
-                        objectSelected = false;
-                        objectIsUp = false;
-
-                        CompareFunctionUpdate();
-
-                    });
-                }
-                else
-                {
-                    // Hedef pozisyon doluysa, yer değiştirme işlemi
-                    GameObject otherObject = targetPosition.GetComponentInChildren<Cup>().gameObject;
-                    Collider otherObjectCollider = otherObject.GetComponent<Collider>();
-                    Vector3 originalPosition = selectedObject.transform.position;
-
-                    selectedObjectCollider.enabled = false;
-                    otherObjectCollider.enabled = false;
-
-                    // Diğer nesneyi mevcut pozisyona taşı
-                    otherObject.transform.DOMove(currentPositionManager.transform.position, 0.5f).OnComplete(() =>
-                    {
-                        currentPositionManager.SetIsFull(true);
-                        otherObjectCollider.enabled = true;
-                        otherObject.transform.SetParent(currentPositionManager.transform); // Parent değişikliği
-                    });
-
-                    // Seçilen nesneyi hedef pozisyona taşı
-                    selectedObject.transform.DOMove(targetPosition.transform.position, 0.5f).OnComplete(() =>
-                    {
-                        targetPosition.SetIsFull(true);
-                        selectedObjectCollider.enabled = true;
-                        selectedObject.transform.SetParent(targetPosition.transform); // Parent değişikliği
-                        selectedObject.GetComponent<Rigidbody>().isKinematic = false;
-                        selectedObject = null;
-                        objectSelected = false; 
-                        objectIsUp = false; 
-
-                        CompareFunctionUpdate();
-                    });
-                }
-
-                currentPositionManager.SetIsFull(false);
-            }
-        }
+        selectedObject.transform.DOMove(targetPosition.transform.position, 0.5f).OnComplete(() =>
+        {
+            targetPosition.SetIsFull(true);
+            selectedObjectCollider.enabled = true;
+            selectedObject.transform.SetParent(targetPosition.transform);
+            selectedObject.GetComponent<Rigidbody>().isKinematic = false;
+            selectedObject = null;
+            objectSelected = false;
+            objectIsUp = false;
+            isAnimating = false;
+            CompareFunctionUpdate();
+        });
     }
-    void CompareFunctionUpdate()
+
+    private void CompareFunctionUpdate()
     {
         for (int i = 0; i < cupComparer.Count; i++)
         {
-
             cupComparer[i].UpdateCupPairs();
         }
     }

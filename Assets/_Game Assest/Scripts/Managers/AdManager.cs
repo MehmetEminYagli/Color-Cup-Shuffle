@@ -33,8 +33,16 @@ public static class AdManager
 
 #if UNITY_EDITOR
         onComplete?.Invoke(true);
+        onComplete += (success) => {
+            if (success)
+            {
+                GameManager.Instance.uiOverlay.RewardPlayerForAdWatching();
+            }
+        };
 #else
         //TODO: REQUEST AD HERE
+
+
 #endif
     }
 

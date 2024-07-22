@@ -32,4 +32,14 @@ public class UIOverlay : MonoBehaviour
     {
         DataManager.OnCurrencyUpdated -= UpdateCurrencyText;
     }
+
+    public void RewardPlayerForLevelCompletion()
+    {
+        DataManager.Currency += 100;
+    }
+
+    public void RewardPlayerForAdWatching()
+    {
+        DataManager.Currency += 200;
+    }
 }

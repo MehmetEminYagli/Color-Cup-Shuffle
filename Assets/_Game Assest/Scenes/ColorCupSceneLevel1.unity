@@ -1727,6 +1727,7 @@ MonoBehaviour:
   remaingAttempsText: {fileID: 1859648410}
   uiLevelEnd: {fileID: 1793455572}
   checkCorrectButton: {fileID: 1859545755}
+  overlayCanvasBackPanel: {fileID: 1323481088}
 --- !u!4 &1128928392
 Transform:
   m_ObjectHideFlags: 0
@@ -2228,6 +2229,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcd3278f7f2d5742930764d5f8e4ada, type: 3}
+--- !u!1 &1323481088 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6702132983707854250, guid: 9171db50b13896444a39f58ee3466677,
+    type: 3}
+  m_PrefabInstance: {fileID: 1722526844179910566}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1340828569
 GameObject:
   m_ObjectHideFlags: 0
@@ -3778,6 +3785,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1016593553841235402, guid: 9171db50b13896444a39f58ee3466677,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1125741981514140408, guid: 9171db50b13896444a39f58ee3466677,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3873,6 +3885,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1722526844155456242, guid: 9171db50b13896444a39f58ee3466677,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1722526844378894563, guid: 9171db50b13896444a39f58ee3466677,
         type: 3}
       propertyPath: m_IsActive
@@ -3916,22 +3933,22 @@ PrefabInstance:
     - target: {fileID: 7378952126680775271, guid: 9171db50b13896444a39f58ee3466677,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.07
+      value: 2.18
       objectReference: {fileID: 0}
     - target: {fileID: 7378952126680775271, guid: 9171db50b13896444a39f58ee3466677,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.08
+      value: -0.82
       objectReference: {fileID: 0}
     - target: {fileID: 7378952126680775271, guid: 9171db50b13896444a39f58ee3466677,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98086923
+      value: 0.98806727
       objectReference: {fileID: 0}
     - target: {fileID: 7378952126680775271, guid: 9171db50b13896444a39f58ee3466677,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.19466782
+      value: 0.15402289
       objectReference: {fileID: 0}
     - target: {fileID: 7378952126680775271, guid: 9171db50b13896444a39f58ee3466677,
         type: 3}
@@ -3946,7 +3963,7 @@ PrefabInstance:
     - target: {fileID: 7378952126680775271, guid: 9171db50b13896444a39f58ee3466677,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 22.451
+      value: 17.72
       objectReference: {fileID: 0}
     - target: {fileID: 8412743225468928284, guid: 9171db50b13896444a39f58ee3466677,
         type: 3}

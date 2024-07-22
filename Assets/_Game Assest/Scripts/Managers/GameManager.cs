@@ -31,6 +31,7 @@ public class GameManager : MonoSingleton<GameManager>
     [ReadOnly, Required] public CameraManager cameraManager;
     [ReadOnly, Required] public NotificationManager notificationManager;
     [ReadOnly, Required] public ObjectPoolingManager objectPoolingManager;
+    [ReadOnly, Required] public UIOverlay uiOverlay;
 
     protected override void Init()
     {
@@ -54,7 +55,12 @@ public class GameManager : MonoSingleton<GameManager>
         levelManager = GetComponentInChildren<LevelManager>(true).Initialize();
         uiManager = GetComponentInChildren<UIManager>(true).Initialize();
         notificationManager = GetComponentInChildren<NotificationManager>(true).Initialize();
+        uiOverlay = uiManager.GetComponentInChildren<UIOverlay>(true);
     }
+
+
+
+  
 
     private void Start()
     {

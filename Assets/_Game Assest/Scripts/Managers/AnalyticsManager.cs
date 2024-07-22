@@ -40,7 +40,12 @@ public static class AnalyticsManager
         //     { "levelIndex", lvlIndex},
         //     { "levelId", lvlId},
         // }); 
-        
+
+        if (endType == EndType.Success)
+        {
+            GameManager.Instance.uiOverlay.RewardPlayerForLevelCompletion();
+        }
+
         LogManager.Log($"AnalyticsHelper OnLevelEnded - Level index:{lvlIndex}, Level id:{lvlId} " +
                        $"End type:{endType}, extra params:{extraParams}");
     }

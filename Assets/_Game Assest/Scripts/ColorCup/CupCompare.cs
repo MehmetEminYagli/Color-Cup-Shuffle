@@ -25,7 +25,6 @@ public class CupCompare : MonoBehaviour
             cupPairs.Add(object2.GetComponentInChildren<Cup>().gameObject);
         }
     }
-
     public void CupMatches()
     {
         if (cupPairs.Count < 2)
@@ -44,8 +43,6 @@ public class CupCompare : MonoBehaviour
         }
 
     }
-
-    // Bu metod nesneler yer değiştirdiğinde çağrılabilir
     public void UpdateCupPairs()
     {
         // cupPairs listesindeki ikinci elemanı güncelle
@@ -58,12 +55,10 @@ public class CupCompare : MonoBehaviour
         // Karşılaştırmayı yeniden yap
         CupMatches();
     }
-
     public bool Ismatches()
     {
         return isMatches;
     }
-
     public void BtnCupMatchesControl()
     {
         CupMatches();

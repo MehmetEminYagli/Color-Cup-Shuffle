@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
+
 public class MatchCounter : MonoBehaviour
 {
     [SerializeField] private List<CupCompare> cupComparer;
@@ -11,16 +13,22 @@ public class MatchCounter : MonoBehaviour
     [SerializeField] private UILevelEnd uiLevelEnd;
     private int remainingAttempts = 4;
     [SerializeField] private Button checkCorrectButton;
+    [SerializeField] private GameObject overlayCanvasBackPanel;
 
     private void Start()
     {
-        TextCorrectMathesCount();
-        remainingAttempts = 4;
+        StartedFunctions();
+        Invoke(nameof(CountCorrectMatches), 0.1f);
+    }
+
+    public void StartedFunctions()
+    {
+        remainingAttempts = 5;
         correctCount.gameObject.SetActive(true);
         checkCorrectButton.gameObject.SetActive(true);
         remaingAttempsText.gameObject.SetActive(true);
+        overlayCanvasBackPanel.SetActive(true);
         remaingAttempsText.GetComponentInChildren<TextMeshProUGUI>().text = remainingAttempts.ToString();
-        
     }
 
     public void CountCorrectMatches()
@@ -43,7 +51,7 @@ public class MatchCounter : MonoBehaviour
         }
         else
         {
-            FailPlayer();
+            StartCoroutine(FailPlayer());
         }
         remaingAttempsText.GetComponentInChildren<TextMeshProUGUI>().text = remainingAttempts.ToString();
     }
@@ -62,30 +70,34 @@ public class MatchCounter : MonoBehaviour
     {
         if (correctMatches == 4)
         {
-            WinnerCorrectMatch();
+            StartCoroutine(WinnerCorrectMatch());
         }
         else if (remainingAttempts == 0)
         {
-            FailPlayer();
+            StartCoroutine(FailPlayer());
         }
     }
 
-    public void WinnerCorrectMatch()
+    public IEnumerator WinnerCorrectMatch()
     {
+        yield return new WaitForSeconds(0.5f);
         GameManager.Instance.LevelFinish(true);
         uiLevelEnd.Show(true);
         correctCount.gameObject.SetActive(false);
         checkCorrectButton.gameObject.SetActive(false);
         remaingAttempsText.gameObject.SetActive(false);
+        overlayCanvasBackPanel.SetActive(false);
     }
 
 
-    public void FailPlayer()
+    public IEnumerator FailPlayer()
     {
+        yield return new WaitForSeconds(0.5f);
         GameManager.Instance.LevelFinish(false);
         uiLevelEnd.Show(false);
         correctCount.gameObject.SetActive(false);
         checkCorrectButton.gameObject.SetActive(false);
         remaingAttempsText.gameObject.SetActive(false);
+        overlayCanvasBackPanel.SetActive(false);
     }
 }
