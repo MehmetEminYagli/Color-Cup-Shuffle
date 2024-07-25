@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CupCompare : MonoBehaviour
 {
-    [SerializeField] private MatchCounter matchCounter;
+    //[SerializeField] private MatchCounter matchCounter;
     [SerializeField] private List<GameObject> cupPairs;
     [SerializeField] private GameObject object1;
     [SerializeField] private GameObject object2;
