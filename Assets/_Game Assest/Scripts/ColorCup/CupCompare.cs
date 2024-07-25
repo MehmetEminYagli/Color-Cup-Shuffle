@@ -62,7 +62,7 @@ public class CupCompare : MonoBehaviour
         // Karşılaştırmayı yeniden yap
         CupMatches();
     }
-    public bool Ismatches()
+    public bool IsMatches()
     {
         return isMatches;
     }

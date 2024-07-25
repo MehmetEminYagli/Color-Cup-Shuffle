@@ -723,6 +723,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7989994215598655080, guid: b063de29072542f42867c65721763d11,
+        type: 3}
+      propertyPath: correctCountText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989994215598655080, guid: b063de29072542f42867c65721763d11,
+        type: 3}
+      propertyPath: remainingAttemptsText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989994215598655080, guid: b063de29072542f42867c65721763d11,
+        type: 3}
+      propertyPath: overlayCanvasBackPanel
+      value: 
+      objectReference: {fileID: 8000660892173356188}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b063de29072542f42867c65721763d11, type: 3}
 --- !u!114 &2956801609297848892 stripped
@@ -743,12 +758,18 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 6660215344351570537}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8000660892173356188}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5681770e4e2089d409de537bb0e85275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8000660892173356188 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3703603901907609333, guid: b063de29072542f42867c65721763d11,
+    type: 3}
+  m_PrefabInstance: {fileID: 6660215344351570537}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8000660892173356191 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3703603901907609334, guid: b063de29072542f42867c65721763d11,

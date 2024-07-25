@@ -42,4 +42,25 @@ public class UIOverlay : MonoBehaviour
     {
         DataManager.Currency += 200;
     }
+
+    [SerializeField] private TextMeshProUGUI correctCountText;
+    [SerializeField] private TextMeshProUGUI remainingAttemptsText;
+    [SerializeField] private GameObject overlayCanvasBackPanel;
+
+    public void UpdateCorrectMatchesText(int correctMatches, int totalMatches)
+    {
+        correctCountText.text = correctMatches.ToString() + " / " + totalMatches.ToString();
+    }
+
+    public void UpdateRemainingAttemptsText(int remainingAttempts)
+    {
+        remainingAttemptsText.text = remainingAttempts.ToString();
+    }
+
+    public void SetUIElementsActive(bool isActive)
+    {
+        correctCountText.gameObject.SetActive(isActive);
+        remainingAttemptsText.gameObject.SetActive(isActive);
+        overlayCanvasBackPanel.SetActive(isActive);
+    }
 }
