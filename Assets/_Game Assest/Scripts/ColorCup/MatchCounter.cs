@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
-
+using DG.Tweening;
 public class MatchCounter : MonoBehaviour
 {
     [SerializeField] private List<CupCompare> cupComparer;
@@ -14,9 +14,11 @@ public class MatchCounter : MonoBehaviour
     private int remainingAttempts = 4;
     [SerializeField] private Button checkCorrectButton;
     [SerializeField] private GameObject overlayCanvasBackPanel;
+    private bool isWin = false;
 
     private void Start()
     {
+        isWin = false;
         StartedFunctions();
         Invoke(nameof(CountCorrectMatches), 0.1f);
     }
@@ -44,10 +46,15 @@ public class MatchCounter : MonoBehaviour
                     correctMatches++;
                 }
             }
+            if (correctMatches < 4)
+            {
+                remainingAttempts--;
+                FailRotateDeskFunction();
+            }
             GetCorrectMatches();
             TextCorrectMathesCount();
-            remainingAttempts--;
             CheckWinOrFail();
+            
         }
         else
         {
@@ -70,6 +77,8 @@ public class MatchCounter : MonoBehaviour
     {
         if (correctMatches == 4)
         {
+            isWin = true;
+            WinRotateDeskFunction();
             StartCoroutine(WinnerCorrectMatch());
         }
         else if (remainingAttempts == 0)
@@ -77,16 +86,27 @@ public class MatchCounter : MonoBehaviour
             StartCoroutine(FailPlayer());
         }
     }
+    public bool IsWin()
+    {
+        return isWin;
+    }
 
     public IEnumerator WinnerCorrectMatch()
     {
-        yield return new WaitForSeconds(0.5f);
-        GameManager.Instance.LevelFinish(true);
-        uiLevelEnd.Show(true);
+        for (int i = 0; i < cupComparer.Count; i++)
+        {
+            cupComparer[i].GetObject1().GetComponentInChildren<Rigidbody>().isKinematic = true;
+            cupComparer[i].GetObject2().GetComponentInChildren<Rigidbody>().isKinematic = true;
+
+        }
+        yield return new WaitForSeconds(1f);
         correctCount.gameObject.SetActive(false);
         checkCorrectButton.gameObject.SetActive(false);
         remaingAttempsText.gameObject.SetActive(false);
         overlayCanvasBackPanel.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+        uiLevelEnd.Show(true);
+        GameManager.Instance.LevelFinish(true);
     }
 
 
@@ -100,4 +120,20 @@ public class MatchCounter : MonoBehaviour
         remaingAttempsText.gameObject.SetActive(false);
         overlayCanvasBackPanel.SetActive(false);
     }
+
+
+    [SerializeField] private GameObject desk;
+    public void WinRotateDeskFunction()
+    {
+        desk.transform.DOLocalRotate(new Vector3(0,180, 180), 1f, RotateMode.FastBeyond360);
+    }
+
+    public void FailRotateDeskFunction()
+    {
+
+        desk.transform.DOShakeRotation(1f, new Vector3(0, 15, 0), 6, 90, false);
+
+
+    }
 }
+

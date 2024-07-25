@@ -14,7 +14,14 @@ public class CupCompare : MonoBehaviour
         CompareObjects();
         CupMatches();
     }
-
+    public GameObject GetObject1()
+    {
+        return object1;
+    }
+    public GameObject GetObject2()
+    {
+        return object2;
+    }
     public void CompareObjects()
     {
         cupPairs.Clear(); 
