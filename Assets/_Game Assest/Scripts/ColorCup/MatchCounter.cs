@@ -12,6 +12,8 @@ public class MatchCounter : MonoBehaviour
     [SerializeField] private Button checkCorrectButton;
     [SerializeField] private DeskManager deskManager;
 
+    [SerializeField] private GameObject winParticleEffect;
+
     private int correctMatches;
     private int remainingAttempts;
 
@@ -26,6 +28,7 @@ public class MatchCounter : MonoBehaviour
         correctMatches = 0;
         remainingAttempts = 4;
 
+        winParticleEffect.SetActive(false);
         uiManager.overlay.SetUIElementsActive(true);
         uiManager.overlay.UpdateRemainingAttemptsText(remainingAttempts);
         uiManager.overlay.UpdateCorrectMatchesText(correctMatches, cupComparers.Count);
@@ -87,7 +90,8 @@ public class MatchCounter : MonoBehaviour
 
     private IEnumerator WinnerSequence()
     {
-        yield return new WaitForSeconds(1f);
+        winParticleEffect.SetActive(true);
+        yield return new WaitForSeconds(.8f);
         uiManager.overlay.SetUIElementsActive(false);
         yield return new WaitForSeconds(1.5f);
         uiLevelEnd.Show(true);
