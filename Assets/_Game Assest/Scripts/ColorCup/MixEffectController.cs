@@ -9,12 +9,6 @@ public class MixEffectController : MonoBehaviour
     public GameObject lastEffect;
     public DeskManager desk;
 
-    private void Start()
-    {
-
-    }
-
-
     public void StartMixEffect()
     {
         StartCoroutine(ShuffleEffect());
@@ -34,7 +28,6 @@ public class MixEffectController : MonoBehaviour
         }
         
     }
-
     public void EndMixEffect()
     {
         StartCoroutine(ActivateEffects());

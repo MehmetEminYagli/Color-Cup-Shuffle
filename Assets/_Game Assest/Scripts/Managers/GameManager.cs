@@ -59,9 +59,6 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
 
-
-  
-
     private void Start()
     {
         GameState = GameState.Ready;

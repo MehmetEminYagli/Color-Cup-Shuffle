@@ -6,7 +6,7 @@ using System.Collections;
 using DG.Tweening;
 public class MatchCounter : MonoBehaviour
 {
-    [SerializeField] private List<CupCompare> cupComparers;
+    [SerializeField] public List<CupCompare> cupComparers;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private UILevelEnd uiLevelEnd;
     [SerializeField] private Button checkCorrectButton;
@@ -17,21 +17,28 @@ public class MatchCounter : MonoBehaviour
     private int correctMatches;
     private int remainingAttempts;
 
+
     private void Start()
     {
-        InitializeGame();
-        Invoke(nameof(FirstCountCorrect), 0.00001f);
+        winParticleEffect.SetActive(false);
+    }
+    public void InitializeGame()
+    {
+        StartCoroutine(InitializeGameStart());
     }
 
-    private void InitializeGame()
+    private IEnumerator InitializeGameStart()
     {
+        yield return new WaitForSeconds(0.1f);
         correctMatches = 0;
         remainingAttempts = 4;
 
-        winParticleEffect.SetActive(false);
+        
         uiManager.overlay.SetUIElementsActive(true);
         uiManager.overlay.UpdateRemainingAttemptsText(remainingAttempts);
         uiManager.overlay.UpdateCorrectMatchesText(correctMatches, cupComparers.Count);
+
+        Invoke(nameof(FirstCountCorrect), 0.00001f);
     }
 
     public void FirstCountCorrect()

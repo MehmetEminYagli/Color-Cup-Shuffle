@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,19 +10,18 @@ public class CupCompare : MonoBehaviour
     [SerializeField] private GameObject object2;
     public bool isMatches;
 
-    private void Start()
+  public void InitializeCounting()
     {
+        StartCoroutine(InitializeComparison());
+    }
+
+    public IEnumerator InitializeComparison()
+    {
+        yield return new WaitForSeconds(0.1f);
         CompareObjects();
         CupMatches();
     }
-    public GameObject GetObject1()
-    {
-        return object1;
-    }
-    public GameObject GetObject2()
-    {
-        return object2;
-    }
+
     public void CompareObjects()
     {
         cupPairs.Clear(); 

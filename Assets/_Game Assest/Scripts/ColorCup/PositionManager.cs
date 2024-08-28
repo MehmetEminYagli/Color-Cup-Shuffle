@@ -6,9 +6,6 @@ public class PositionManager : MonoBehaviour
 {
     private bool isFull = false;
     public bool IsFull => isFull;
-    void Start()
-    {
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +13,6 @@ public class PositionManager : MonoBehaviour
         {
             isFull = true;
         }
-
     }
     private void OnTriggerExit(Collider other)
     {
@@ -25,7 +21,6 @@ public class PositionManager : MonoBehaviour
             isFull = false;
         }
     }
-
     public void SetIsFull(bool value)
     {
         isFull = value;

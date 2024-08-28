@@ -11,24 +11,34 @@ public class ObjectMover : MonoBehaviour
     [SerializeField] private bool objectIsUp = false;
     [SerializeField] List<CupCompare> cupComparer;
     private bool isAnimating = false;
+    private bool isMoveActive = false;
 
     private void Update()
     {
-        if (isAnimating) return;
-
-        if (Input.GetMouseButtonDown(0))
+        if (isMoveActive == true)
         {
-            HandleInput(Input.mousePosition);
-        }
+            if (isAnimating) return;
 
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            if (Input.GetMouseButtonDown(0))
             {
-                HandleInput(touch.position);
+                HandleInput(Input.mousePosition);
+            }
+
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    HandleInput(touch.position);
+                }
             }
         }
+    }
+
+    public bool IsMoveActive(bool gameActiveStatus)
+    {
+        isMoveActive = gameActiveStatus;
+        return isMoveActive;
     }
 
     private void HandleInput(Vector2 inputPosition)
@@ -52,12 +62,12 @@ public class ObjectMover : MonoBehaviour
             {
                 selectedObject = pos.GetComponentInChildren<Cup>().gameObject;
                 currentPositionManager = selectedObject.GetComponentInParent<PositionManager>();
-                isAnimating = true; 
+                isAnimating = true;
                 selectedObject.transform.DOMoveY(selectedObject.transform.position.y + .5f, 0.5f).OnComplete(() =>
                 {
                     objectIsUp = true;
                     selectedObject.GetComponent<Rigidbody>().isKinematic = true;
-                    isAnimating = false; 
+                    isAnimating = false;
                 });
                 currentPositionManager.SetIsFull(false);
                 objectSelected = true;
@@ -101,9 +111,10 @@ public class ObjectMover : MonoBehaviour
             selectedObject = null;
             objectSelected = false;
             objectIsUp = false;
-            isAnimating = false; 
+            isAnimating = false;
             CompareFunctionUpdate();
         });
+
     }
 
     private void SwapObjects(PositionManager targetPosition, Collider selectedObjectCollider)
@@ -114,7 +125,7 @@ public class ObjectMover : MonoBehaviour
 
         selectedObjectCollider.enabled = false;
         otherObjectCollider.enabled = false;
-        isAnimating = true; 
+        isAnimating = true;
 
         otherObject.transform.DOMove(currentPositionManager.transform.position, 0.5f).OnComplete(() =>
         {

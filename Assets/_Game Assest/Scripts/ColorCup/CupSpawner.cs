@@ -7,14 +7,19 @@ public class CupSpawner : MonoBehaviour
     [SerializeField] private List<Transform> cupListTransforms = new List<Transform>();
     [SerializeField] private List<Transform> cupListInvisibleTransforms = new List<Transform>();
     [SerializeField] private MixEffectController mixEffectController;
+    [SerializeField] private MatchCounter matchCounter;
+    [SerializeField] private ObjectMover objectMover;
+
 
     private List<GameObject> spawnedInvisibleObjects = new List<GameObject>();
     private List<GameObject> selectedPrefabs = new List<GameObject>();
+
     private int shuffleCount = 0;
     private const int maxShuffles = 3;
-
+    [SerializeField] private float spawnRate;
     private void Awake()
     {
+        objectMover.IsMoveActive(false);;
         if (ValidateInput())
         {
             selectedPrefabs = SelectRandomItems(gameObjectPrefabs, 4);
@@ -24,7 +29,7 @@ public class CupSpawner : MonoBehaviour
             SpawnPrefabs(selectedPrefabs, selectedSpawnPoints);
             SpawnInvisiblePrefabs(selectedPrefabs, selectedInvisibleSpawnPoints);
 
-            InvokeRepeating(nameof(ShuffleInvisibleObjects), .5f, 3);
+            InvokeRepeating(nameof(ShuffleInvisibleObjects), spawnRate, spawnRate);
         }
     }
 
@@ -71,112 +76,67 @@ public class CupSpawner : MonoBehaviour
         for (int i = 0; i < prefabs.Count; i++)
         {
             GameObject spawnedObject = Instantiate(prefabs[i], spawnPoints[i].position, Quaternion.identity, spawnPoints[i]);
+            spawnedObject.GetComponent<Rigidbody>().isKinematic = true;
             spawnedInvisibleObjects.Add(spawnedObject);
         }
     }
 
     private void ShuffleInvisibleObjects()
     {
-        foreach (GameObject obj in spawnedInvisibleObjects)
-        {
-            Destroy(obj);
-        }
-        spawnedInvisibleObjects.Clear();
-
+        // Var olan objeleri yok etmek yerine, pozisyonlarını değiştiriyoruz
         mixEffectController.StartMixEffect();
 
         List<Transform> newSpawnPoints = SelectRandomItems(cupListInvisibleTransforms, 4);
-        SpawnInvisiblePrefabs(selectedPrefabs, newSpawnPoints);
+        for (int i = 0; i < spawnedInvisibleObjects.Count; i++)
+        {
+            spawnedInvisibleObjects[i].transform.position = newSpawnPoints[i].position;
+            spawnedInvisibleObjects[i].transform.SetParent(newSpawnPoints[i]);
+        }
 
         shuffleCount++;
         if (shuffleCount >= maxShuffles)
         {
             CancelInvoke(nameof(ShuffleInvisibleObjects));
             mixEffectController.EndMixEffect();
+
+            foreach (var comparer in matchCounter.cupComparers)
+            {
+                comparer.InitializeCounting();
+            }
+            matchCounter.InitializeGame();
+            objectMover.IsMoveActive(true);
         }
     }
+
+
+
+    //destroy edip yeniden spawn ediyorduk bu versiyonda simdiki versiyonda destroy yerine yer degistiriyoruz
+    //private void ShuffleInvisibleObjects()
+    //{
+    //    foreach (GameObject obj in spawnedInvisibleObjects)
+    //    {
+    //        Destroy(obj);
+    //    }
+    //    spawnedInvisibleObjects.Clear();
+
+    //    mixEffectController.StartMixEffect();
+
+    //    List<Transform> newSpawnPoints = SelectRandomItems(cupListInvisibleTransforms, 4);
+    //    SpawnInvisiblePrefabs(selectedPrefabs, newSpawnPoints);
+
+    //    shuffleCount++;
+    //    if (shuffleCount >= maxShuffles)
+    //    {
+    //        CancelInvoke(nameof(ShuffleInvisibleObjects));
+    //        mixEffectController.EndMixEffect();
+
+    //        foreach (var comparer in matchCounter.cupComparers)
+    //        {
+    //            comparer.InitializeCounting();
+    //        }
+    //        matchCounter.InitializeGame();
+    //        objectMover.IsMoveActive(true);
+    //    }
+    //}
 }
 
-
-
-
-
-
-
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-
-//public class CupSpawner : MonoBehaviour
-//{
-//    [SerializeField] private List<GameObject> gameObjectPrefab = new List<GameObject>();
-//    [SerializeField] private List<Transform> cupListTransform = new List<Transform>();
-//    [SerializeField] private List<Transform> cupListInvisibleTransform = new List<Transform>();
-
-//    private void Awake()
-//    {
-//        SpawnRandomPrefabs();
-//    }
-
-//    void SpawnRandomPrefabs()
-//    {
-//        if (gameObjectPrefab.Count < 4 || cupListTransform.Count < 4)
-//        {
-//            Debug.LogError("Prefabs or SpawnPoints count is less than 4!");
-//            return;
-//        }
-
-//        // Prefab ve SpawnPoint index listelerini oluştur
-//        List<int> prefabIndices = new List<int>();
-//        List<int> spawnPointIndices = new List<int>();
-//        List<int> spawnPointIndicesInvisible = new List<int>();
-
-
-//        for (int i = 0; i < gameObjectPrefab.Count; i++)
-//        {
-//            prefabIndices.Add(i);
-//        }
-
-//        for (int i = 0; i < cupListTransform.Count; i++)
-//        {
-//            spawnPointIndices.Add(i);
-//        }
-//        for (int i = 0; i < cupListInvisibleTransform.Count; i++)
-//        {
-//            spawnPointIndicesInvisible.Add(i);
-//        }
-
-//        // Prefab ve SpawnPoint listelerinden random 4 tanesini seç
-//        List<GameObject> selectedPrefabs = new List<GameObject>();
-//        List<Transform> selectedSpawnPoints = new List<Transform>();
-//        List<Transform> selectedInvisibleSpawnPoints = new List<Transform>();
-
-//        for (int i = 0; i < 4; i++)
-//        {
-//            int randomPrefabIndex = Random.Range(0, prefabIndices.Count);
-//            selectedPrefabs.Add(gameObjectPrefab[prefabIndices[randomPrefabIndex]]);
-//            prefabIndices.RemoveAt(randomPrefabIndex);
-
-//            int randomSpawnPointIndex = Random.Range(0, spawnPointIndices.Count);
-//            selectedSpawnPoints.Add(cupListTransform[spawnPointIndices[randomSpawnPointIndex]]);
-//            spawnPointIndices.RemoveAt(randomSpawnPointIndex);
-
-//            int randomInvisibleSpawnPointIndex = Random.Range(0, spawnPointIndicesInvisible.Count);
-//            selectedInvisibleSpawnPoints.Add(cupListInvisibleTransform[spawnPointIndicesInvisible[randomInvisibleSpawnPointIndex]]);
-//            spawnPointIndicesInvisible.RemoveAt(randomInvisibleSpawnPointIndex);
-//        }
-
-//        // Seçilen prefabları random seçilen spawn noktalarına yerleştir
-//        for (int i = 0; i < selectedPrefabs.Count; i++)
-//        {
-//            Instantiate(selectedPrefabs[i], selectedSpawnPoints[i].position, Quaternion.identity, selectedSpawnPoints[i]);
-
-//        }
-//        for (int i = 0; i < selectedPrefabs.Count; i++)
-//        {
-//            Instantiate(selectedPrefabs[i], selectedInvisibleSpawnPoints[i].position, Quaternion.identity,selectedInvisibleSpawnPoints[i]);
-//        }
-//    }
-
-
-//}

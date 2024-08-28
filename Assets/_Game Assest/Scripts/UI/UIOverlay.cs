@@ -4,7 +4,7 @@ using UnityEngine;
 public class UIOverlay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI currencyText;
-    [SerializeField] private GameObject noInternetPopUp;
+    //[SerializeField] private GameObject noInternetPopUp;
 
     private void OnEnable()
     {
@@ -20,7 +20,7 @@ public class UIOverlay : MonoBehaviour
     private void CheckForInternetConnection()
     {
         var isReachable = Application.internetReachability != NetworkReachability.NotReachable;
-        noInternetPopUp.SetActive(!isReachable);
+        //noInternetPopUp.SetActive(!isReachable);
     }
 
     private void UpdateCurrencyText(int value)
