@@ -84,10 +84,11 @@ public class GameSROptions
         AdManager.ShowRewarded("test_ad", null);
     }
     
-    [Category("Ad Test")]
+    [Category("Ad Test")] 
     public void RequestBanner()
     {
         AdManager.ActivateBanner();
+        Debug.Log("bannerreklam");
     }
 }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using GoogleMobileAds.Api;
 
 public static class AdManager
 {
@@ -33,7 +34,8 @@ public static class AdManager
 
 #if UNITY_EDITOR
         onComplete?.Invoke(true);
-        onComplete += (success) => {
+        onComplete += (success) =>
+        {
             if (success)
             {
                 GameManager.Instance.uiOverlay.RewardPlayerForAdWatching();
@@ -51,12 +53,23 @@ public static class AdManager
         GameManager.Instance.StartCoroutine(BannerActivationCheck());
     }
 
+    private static BannerView _bannerView;
+
     private static IEnumerator BannerActivationCheck()
     {
         var checkInterval = new WaitForSeconds(.5f);
+        string adUnitId = "ca-app-pub-6836607607325829~3968615925"; // AdMob'dan aldığınız banner reklam birim kimliği.
 
-        //TODO: REQUEST AD HERE
-        
-        yield return null;
+        // Banner reklamı oluştur
+        _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+
+        // Banner reklam talebi oluştur ve yükle
+        AdRequest request = new AdRequest();
+        _bannerView.LoadAd(request);
+
+        // Banner'ı göster
+        _bannerView.Show();
+
+        yield return checkInterval;
     }
 }

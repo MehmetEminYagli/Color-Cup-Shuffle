@@ -26,7 +26,12 @@ public class AppManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(ReviewManager.Start());
+        AdManager.ActivateBanner();
     }
+
+
+
+
 
     // // ReSharper disable once InconsistentNaming
     // private void FBInitCallback()

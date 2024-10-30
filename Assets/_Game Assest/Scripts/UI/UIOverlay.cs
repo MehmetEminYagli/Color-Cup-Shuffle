@@ -63,4 +63,5 @@ public class UIOverlay : MonoBehaviour
         remainingAttemptsText.gameObject.SetActive(isActive);
         overlayCanvasBackPanel.SetActive(isActive);
     }
+
 }

@@ -156,6 +156,7 @@ MonoBehaviour:
   cameraManager: {fileID: 4888824176284505705}
   notificationManager: {fileID: 2515167528635139094}
   objectPoolingManager: {fileID: 5756128326432958267}
+  uiOverlay: {fileID: 0}
 --- !u!1 &1722526844151407043
 GameObject:
   m_ObjectHideFlags: 0

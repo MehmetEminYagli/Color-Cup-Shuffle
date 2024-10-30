@@ -59,4 +59,6 @@ public class UILevelEnd : MonoBehaviour
     {
         LevelManager.ReloadScene();
     }
+
+
 }
